@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}SweetTalk - Payment Page{% endblock %}
+
+{% block content %}
+{% set total_price = session.get('total_price') %}
+
+<h2 style="text-align: center; color: #000; margin-bottom: 20px;">Payment Page</h2>
+
+<div
+    style="max-width: 500px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    <label style="font-weight: bold; display: block; margin-bottom: 10px;">Select Payment Method:</label>
+    <div style="margin-bottom: 20px;">
+        <input type="radio" id="cardPayment" name="paymentMethod" value="card" checked
+            onclick="togglePaymentMethod('card')" style="margin-right: 8px;">
+        <label for="cardPayment">Card Payment</label>
+        <br>
+        <input type="radio" id="payNow" name="paymentMethod" value="paynow" onclick="togglePaymentMethod('paynow')"
+            style="margin-right: 8px;">
+        <label for="payNow">PayNow (QR Code)</label>
+    </div>
+
+    <form id="paymentForm" action="{{ url_for('process_payment') }}" method="POST" onsubmit="return validateForm()">
+        <div id="cardPaymentSection">
+            <label for="nameOnCard" style="font-weight: bold; display: block; margin-bottom: 5px;">Name on Card:</label>
+            <input type="text" id="nameOnCard" placeholder="Name"
+                style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 4px;">
+            <div id="nameOnCardError" style="color: red; font-size: 12px; display: none;">Please enter the name on the
+                card.</div>
+
+            <label for="cardNumber" style="font-weight: bold; display: block; margin-bottom: 5px;">Card Number:</label>
+            <input type="text" id="cardNumber" maxlength="19" placeholder="XXXX XXXX XXXX XXXX"
+                style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 4px;">
+            <div id="cardNumberError" style="color: red; font-size: 12px; display: none;">Please enter a valid 16-digit
+                card number.</div>
+
+            <label for="expiryDate" style="font-weight: bold; display: block; margin-bottom: 5px;">Expiry Date
+                (MM/YY):</label>
+            <input type="text" id="expiryDate" maxlength="5" placeholder="MM/YY"
+                style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 4px;">
+            <div id="expiryDateError" style="color: red; font-size: 12px; display: none;">Please enter a valid expiry
+                date in MM/YY format.</div>
+
+            <label for="cvv" style="font-weight: bold; display: block; margin-bottom: 5px;">CVV:</label>
+            <input type="text" id="cvv" maxlength="3" placeholder="XXX"
+                style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px;">
+            <div id="cvvError" style="color: red; font-size: 12px; display: none;">Please enter a 3-digit CVV.</div>
+            <br>
+            {% set total_price = request.args.get('total_price', '0.00') %}
+            {% set total_price = total_price | float %}
+            <p><strong>Total Price:</strong> ${{ "%.2f" | format(total_price) }}</p>
+
+            <br>
+            <button type="submit"
+                style="width: 100%; padding: 12px; background-color: #000; color: #fff; border: none; border-radius: 4px; cursor: pointer;">Make
+                Payment</button>
+        </div>
+    </form>
+
+    <div id="payNowSection" style="display: none; text-align: center;">
+
+        <form action="{{ url_for('process_payment') }}" method="POST">
+            <p style="margin-bottom: 20px;">Scan the QR code below to complete the payment:</p>
+            <img src="{{ url_for('static', filename='PAY ME NOWOWW.jpg') }}" alt="PayNow QR Code"
+                style="margin-bottom: 20px; height: 50vh; width: 50vh;">
+                {% set total_price = request.args.get('total_price', '0.00') %}
+                {% set total_price = total_price | float %}
+                <p><strong>Total Price:</strong> ${{ "%.2f" | format(total_price) }}</p>
+                
+            <button type="submit"
+                style="width: 100%; padding: 12px; background-color: #000; color: #fff; border: none; border-radius: 4px; cursor: pointer;">
+                Confirm Payment
+            </button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function togglePaymentMethod(method) {
+        document.getElementById('cardPaymentSection').style.display = method === 'card' ? 'block' : 'none';
+        document.getElementById('payNowSection').style.display = method === 'paynow' ? 'block' : 'none';
+    }
+
+    document.getElementById('cardNumber').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+    });
+
+    document.getElementById('expiryDate').addEventListener('input', function (e) {
+        let value = e.target.value.replace(/\D/g, '');
+        e.target.value = value.replace(/^(\d{2})(\d{1,2})/, '$1/$2').substring(0, 5);
+    });
+
+    function validateExpiryDate(expiryDate) {
+        const today = new Date();
+        const [month, year] = expiryDate.split('/').map(num => parseInt(num, 10));
+
+        // Convert two-digit year to full year (assuming only future dates, 20XX format)
+        const fullYear = year < 100 ? 2000 + year : year;
+
+        const expiry = new Date(fullYear, month, 0); // Last day of expiry month
+
+        return expiry >= today; // Expiry date should be in the future
+    }
+
+    function validateForm() {
+        let isValid = true;
+
+        const nameOnCard = document.getElementById('nameOnCard').value.trim();
+        const cardNumber = document.getElementById('cardNumber').value.replace(/\s/g, '');
+        const expiryDate = document.getElementById('expiryDate').value;
+        const cvv = document.getElementById('cvv').value;
+
+        document.getElementById('nameOnCardError').style.display = nameOnCard ? 'none' : 'block';
+        document.getElementById('cardNumberError').style.display = cardNumber.length === 16 && /^\d+$/.test(cardNumber) ? 'none' : 'block';
+        document.getElementById('expiryDateError').style.display = /^\d{2}\/\d{2}$/.test(expiryDate) && validateExpiryDate(expiryDate) ? 'none' : 'block';
+        document.getElementById('cvvError').style.display = cvv.length === 3 && /^\d+$/.test(cvv) ? 'none' : 'block';
+
+        if (!nameOnCard) isValid = false;
+        if (cardNumber.length !== 16 || !/^\d+$/.test(cardNumber)) isValid = false;
+        if (!/^\d{2}\/\d{2}$/.test(expiryDate) || !validateExpiryDate(expiryDate)) {
+            isValid = false;
+        }
+        if (cvv.length !== 3 || !/^\d+$/.test(cvv)) isValid = false;
+
+        return isValid;
+    }
+</script>
+
+{% endblock %}

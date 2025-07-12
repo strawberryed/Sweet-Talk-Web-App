@@ -1,0 +1,109 @@
+<nav class="navbar navbar-expand-sm" style="background-color: #fcfbf4; position: relative;">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{{ url_for('home') }}">
+            <img src="{{ url_for('static', filename='logo(removed).png') }}" alt="Logo" style="height: 40px; margin-right: 10px;"> 
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto" style="justify-content: center; width: 100%;">
+                <li class="nav-item dropdown" style="position: relative;">
+                    <a class="nav-link" href="#" id="homeDropdown" style="color: black;">Home</a>
+                    <ul class="dropdown-menu custom-dropdown" aria-labelledby="homeDropdown" 
+                        style="background-color: #fcfbf4; border: none; transition: opacity 0.5s ease, transform 0.3s ease; 
+                               opacity: 0; transform: translateY(-10px); display: block; visibility: hidden; 
+                               position: fixed; left: 0; top: 60px; width: 100vw; padding: 15px 0; 
+                               box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); z-index: 1050; text-align: center;">
+                        <li><a class="dropdown-item" href="{{ url_for('home') }}#carouselExampleInterval">Banner</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('home') }}#home-page-thumbnail">About Us</a></li>
+                        <li><a class="dropdown-item" href="{{ url_for('home') }}#map">Our Stores</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('Aboutus') }}" style="color: black;">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('faq') }}" style="color: black;">FAQ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('menu') }}" style="color: black;">Menu</a>
+                </li>
+                {% if session.get('email') %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      Profile
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                      <li><a class="dropdown-item" href="{{ url_for('profile') }}">Manage Account</a></li>
+                      <li><a class="dropdown-item" href="{{ url_for('logout') }}">Logout</a></li>
+                  </ul>
+              </li>
+              
+              {% else %}
+                <li class="nav-item">
+                    <a class="btn btn-outline-dark login-button ms-2" href="{{ url_for('login') }}" style="color: black; border: 1px solid black;">Log In</a>
+                    <style>
+                      .login-button:hover {
+                          background-color: #C4A484;
+                          color: white; /* Adjust text color for better contrast, if needed */
+                          border-color: #C4A484;
+                      }
+                  </style>
+                </li>
+              {% endif %}
+            </ul>
+        </div>
+    </div>
+
+
+
+    <script>
+        const dropdown = document.querySelector(".custom-dropdown");
+        const dropdownItem = document.querySelector(".nav-item.dropdown");
+        let isHovered = false;
+  
+        dropdownItem.addEventListener("mouseover", function() {
+            isHovered = true;
+            dropdown.style.opacity = "1";
+            dropdown.style.transform = "translateY(0)";
+            dropdown.style.visibility = "visible";
+        });
+  
+        dropdownItem.addEventListener("mouseleave", function() {
+            setTimeout(() => {
+                if (!isHovered) {
+                    dropdown.style.opacity = "0";
+
+dropdown.style.transform = "translateY(-10px)";
+                    dropdown.style.visibility = "hidden";
+                }
+            }, 500); // Delay hiding to prevent flickering
+        });
+  
+        dropdown.addEventListener("mouseover", function() {
+            isHovered = true;
+        });
+
+        dropdown.addEventListener("mouseleave", function() {
+            isHovered = false;
+            setTimeout(() => {
+                if (!isHovered) {
+                    dropdown.style.opacity = "0";
+                    dropdown.style.transform = "translateY(-10px)";
+                    dropdown.style.visibility = "hidden";
+                }
+            }, 500);
+        });
+
+        // Hide dropdown when an anchor link inside is clicked
+        document.querySelectorAll(".custom-dropdown a").forEach(link => {
+            link.addEventListener("click", function() {
+                dropdown.style.opacity = "0";
+                dropdown.style.transform = "translateY(-10px)";
+                dropdown.style.visibility = "hidden";
+                isHovered = false;
+            });
+        });
+    </script>
+</nav>

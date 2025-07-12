@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Cart{% endblock %}
+
+{% block content %}
+<h3>Your Cart</h3>
+<hr>
+
+{% if cart_items %}
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Drink</th>
+        <th>Size</th>
+        <th>Sugar Level</th>
+        <th>Ice Level</th>
+        <th>Toppings</th>
+        <th>Price</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart_items %}
+        <tr>
+          <td>{{ item.name }}</td>
+          <td>{{ item.size }}</td>
+          <td>{{ item.sugar_level }}</td>
+          <td>{{ item.ice_level }}</td>
+          <td>
+            {% if item.toppings %}
+              {{ item.toppings | join(', ') }}
+            {% else %}
+              None
+            {% endif %}
+          </td>
+          <td>${{ "%.2f" | format(item.total_price) }}</td>
+          <td>
+            <form method="POST" action="{{ url_for('remove_from_cart', index=loop.index0) }}">
+              <button type="submit" class="btn btn-danger btn-sm">Remove</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  <h4>Total Price: ${{ "%.2f" | format(total_price) }}</h4>
+  <a href="{{ url_for('payment', total_price=total_price) }}" class="btn btn-success">Proceed to Checkout</a>
+  {% else %}
+  <p>Your cart is empty. <a href="{{ url_for('menu') }}">Browse our menu.</a></p>
+{% endif %}
+{% endblock %}

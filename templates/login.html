@@ -1,0 +1,168 @@
+{% extends "base.html" %}
+
+{% block title %}SweetTalk - Log In BubbleTea{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container" id="form-container">
+        <!-- Login Form -->
+        <div class="login-form">
+            <h2>Login</h2>
+            <form action="{{ url_for('login') }}" method="POST">
+                <div class="form-group">
+                    <label for="login-email">Email:</label>
+                    <input type="email" name="email" id="login-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Password:</label>
+                    <input type="password" name="password" id="login-password" placeholder="Enter your password"
+                        required>
+                </div>
+                <button type="submit">Log In</button>
+            </form>
+            {% if error %}
+            <p style="color:red; font-size:14px;">{{ error }}</p>
+            {% endif %}
+            <div class="toggle-btn">
+                <a href="javascript:void(0);" onclick="toggleForm()">Don't have an account? Sign Up</a>
+            </div>
+        </div>
+
+        <!-- Signup Form -->
+        <div class="signup-form">
+            <h2>Sign Up</h2>
+            <form action="/signup" method="POST">
+                <div class="form-group">
+                    <label for="signup-name">Name:</label>
+                    <input type="text" name="name" id="signup-name" placeholder="Enter your name" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-email">Email:</label>
+                    <input type="email" name="email" id="signup-email" placeholder="Enter your email" required>
+                </div>
+                <div class="form-group">
+                    <label for="signup-password">Password:</label>
+                    <input type="password" name="password" id="signup-password" placeholder="Enter your password"
+                        required>
+                </div>
+                <button type="submit">Sign Up</button>
+                <br>
+                <hr>
+
+            </form>
+            {% if error %}
+            <p style="color:red; font-size:14px;">{{ error }}</p>
+            {% endif %}
+            <div class="toggle-btn">
+                <a href="javascript:void(0);" onclick="toggleForm()">Already have an account? Log In</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #ffffff;
+        color: #000;
+    }
+
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 600px; /* Increased width for a bigger form */
+        padding: 40px; /* Increased padding for more space inside */
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+    }
+
+    h2 {
+        font-size: 28px; /* Increased font size for the heading */
+        font-weight: 700;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    .form-group label {
+        display: block;
+        font-size: 16px; /* Slightly larger labels */
+        margin-bottom: 8px;
+        font-weight: 500;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #000;
+        border-radius: 8px;
+        font-size: 16px; /* Increased input font size */
+        background-color: #f9f9f9;
+    }
+
+    button {
+        width: 100%;
+        padding: 15px; /* Larger button size */
+        background-color: #000;
+        color: #fff;
+        border: none;
+        border-radius: 8px;
+        font-size: 18px; /* Increased font size for button text */
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #333;
+    }
+
+    .toggle-btn {
+        text-align: center;
+        margin-top: 25px;
+    }
+
+    .toggle-btn a {
+        font-size: 16px; /* Slightly larger link text */
+        color: #000;
+        text-decoration: none;
+        font-weight: 500;
+    }
+
+    .toggle-btn a:hover {
+        text-decoration: underline;
+    }
+
+    .signup-form {
+        display: none;
+    }
+
+    .signup-active .signup-form {
+        display: block;
+    }
+
+    .signup-active .login-form {
+        display: none;
+    }
+</style>
+
+
+<script>
+    // Function to toggle between login and signup forms
+    function toggleForm() {
+        var formContainer = document.getElementById('form-container');
+        formContainer.classList.toggle('signup-active');
+    }
+</script>
+{% endblock %}
