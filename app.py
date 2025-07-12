@@ -331,4 +331,4 @@ def process_payment():
                            estimated_pickup_time=estimated_pickup_time.strftime('%Y-%m-%d %H:%M:%S'),
                            cart_items=cart_items)  # Pass cart items to the confirmation page
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
