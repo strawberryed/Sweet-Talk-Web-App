@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}SweetTalk - Payment Confirmation{% endblock %}
+
+{% block content %}
+<body style="font-family: Arial, sans-serif; background-color: #f8f8f8; padding: 20px; color: #000;">
+  <h2 style="text-align: center; color: #000; margin-bottom: 20px;">Order Confirmation</h2>
+
+  <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    <h3 style="margin-bottom: 10px;">Thank you for your order!</h3>
+    
+    <p><strong>Total Price:</strong> ${{ "%.2f" | format(cart_items | sum(attribute='total_price')) }}</p>
+    <p><strong>Queue Number:</strong> {{ queue_number }}</p>
+    <p><strong>Order Time:</strong> {{ order_time }}</p>
+    <p><strong>Estimated Pickup Time:</strong> {{ estimated_pickup_time }}</p>
+    
+    <h4>Your Cart Items:</h4>
+    <ul>
+      {% for item in cart_items %}
+        <li>{{ item.name }} - ${{ "%.2f" | format(item.total_price) }}</li>
+      {% endfor %}
+    </ul>
+
+    <button onclick="goToHome()" style="width: 100%; padding: 12px; background-color: #000; color: #fff; border: none; border-radius: 4px; cursor: pointer; margin-top: 20px;">Back to Home</button>
+  </div>
+
+  <script>
+    function goToHome() {
+      window.location.href = '/';  // Redirect to the home page (change URL as needed)
+    }
+  </script>
+</body>
+
+{% endblock %}

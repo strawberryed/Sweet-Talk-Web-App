@@ -1,0 +1,245 @@
+{% extends "base.html" %}
+{% block title %}SweetTalk - Order BubbleTea{% endblock %}
+
+{% block content %}
+
+<body>
+    <div id="carouselExampleCaptions" class="carousel slide">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="{{ url_for('static', filename='bannnererer.jpg') }}" class="d-block w-100" alt="slave image">
+            <div class="carousel-caption d-none d-md-block">
+              <h5 style="color: #282975;">Sustainable Cities and Community </h5>
+              <p style="color: #282975;"> Engage with the community by supporting local initiatives and fostering a culture of sustainability</p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="{{ url_for('static', filename='aboutusbanner2.png') }}" class="d-block w-100" alt="..." height="800px">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Recyclable Packaging</h5>
+              <p>Packaging materials that can be collected, processed, and reused to reduce waste 
+                and environmental impact, often marked with recycling symbols to encourage proper disposal. </p>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="{{ url_for('static', filename='aboutusbanner3.jpg') }}" class="d-block w-100" alt="..." height="800px">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Sustainable Food Sourcing</h5>
+              <p>The practice of obtaining food from environmentally friendly, socially responsible, and economically viable sources,
+                 ensuring that production methods protect ecosystems, respect labor rights, and support local economies.</p>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+<br>
+<br>
+<br>    
+
+<h2 style="text-align: center; color: #032347; border-radius: 10px; padding: 10px; background-color: white;">Oriental Tea Made Modern</h2>
+<p style="text-align: center; color:#a9a8a8; border-radius: 10px; padding: 10px; background-color: white;">
+  At Sweet Talk, we leverage innovative methods to reimagine traditional oriental tea, creating a modern tea culture. 
+  Brewed with whole tea leaves and a commitment to health, 
+  we craft a tea-drinking experience that bridges heritage and is perfectly suited for modern taste buds.
+</p>
+
+<br>
+<br>
+<div id="slave_employee_container" style="display: flex; align-items: center; margin-top: 20px;">
+  <div style="flex: 1; max-width: 50%;">
+      <img src="{{ url_for('static', filename='bbtea (1) (1).png') }}" class="img-fluid rounded" alt="employee img" style="width: 100%; height: auto; max-height: 300px;">
+  </div>
+  <div style="flex: 1; margin-left: 20px;">
+      <p style="color: #676464; border-radius: 10px; padding: 10px; background-color: white;">
+          At Sweet Talk, we leverage innovative methods to reimagine traditional oriental tea, creating a modern tea culture. 
+          Brewed with whole tea leaves and a commitment to health, 
+          we craft a tea-drinking experience that bridges heritage and is perfectly suited for modern taste buds.
+      </p>
+  </div>
+</div>
+<br>
+<br>
+      <h2 style="text-align: left; color: #063264; border-radius: 10px; padding: 10px; background-color: white;">Bring Everyone Together </h2>
+
+      <div class="container mt-3">
+        <div class="row">
+            <div class="col-md-4"> <!-- Each card takes up 4 columns on medium and larger screens -->
+                <div class="card" style="width: 100%; border: 2px solid #bdb8b8;"> <!-- Added border style -->
+                    <img src="{{ url_for('static', filename='friendsbbtea.jpg') }}" class="card-img-top" alt="endorsement">
+                    <div class="card-body">
+                        <p class="card-text" style="color: #676464; font-family: 'Arial', sans-serif;">Bringing friends together. Cup by Cup!</p> <!-- Added font color and family -->
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-4"> <!-- Each card takes up 4 columns on medium and larger screens -->
+                <div class="card" style="width: 100%; border: 2px solid #bdb8b8;"> <!-- Added border style -->
+                    <img src="{{ url_for('static', filename='familybbtea.jpg') }}" class="card-img-top" alt="endorsement">
+                    <div class="card-body">
+                        <p class="card-text" style="color: #676464; font-family: 'Arial', sans-serif;">Have it for family gathering too!</p> <!-- Added font color and family -->
+                    </div>
+                </div>
+            </div>
+    
+            <div class="col-md-4"> <!-- Each card takes up 4 columns on medium and larger screens -->
+                <div class="card" style="width: 100%; border: 2px solid #bdb8b8;"> <!-- Added border style -->
+                    <img src="{{ url_for('static', filename='travel.png') }}" class="card-img-top" alt="endorsement">
+                    <div class="card-body">
+                        <p class="card-text" style= "color: #676464; font-family: 'Arial', sans-serif;">Indulge in different countries!</p> <!-- Added font color and family -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<br>
+<br>
+<br>
+<h1 style="text-align: center; color: #031b37; border-radius: 10px; padding: 10px; background-color: white;">WHAT WE STAND FOR </h1>
+<br>
+<div class="bussiness_core" style="display: flex; flex-wrap: wrap; justify-content: center;">
+  <div class="col" style="text-align: center; border: 1px solid #fffefe; padding: 10px; margin: 10px; flex: 1 1 200px;">
+      <h5 style="color: #282975; font-family: 'Arial', sans-serif; font-weight: bold;">Togetherness</h5> <!-- Header -->
+      <p style="color: #666; font-family: 'Arial', sans-serif;">We believe in the power of unity and collaboration.</p> <!-- Description -->
+  </div>
+  <div class="col" style="text-align: center; border: 1px solid #ffffff; padding: 10px; margin: 10px; flex: 1 1 200px;">
+      <h5 style="color: #282975; font-family: 'Arial', sans-serif; font-weight: bold;">Sincerity</h5> <!-- Header -->
+      <p style="color: #666; font-family: 'Arial', sans-serif;">Our actions are guided by honesty and transparency.</p> <!-- Description -->
+  </div>
+  <div class="col" style="text-align: center; border: 1px solid #ffffff; padding: 10px; margin: 10px; flex: 1 1 200px;">
+      <h5 style="color: #282975; font-family: 'Arial', sans-serif; font-weight: bold;">Integrity</h5> <!-- Header -->
+      <p style="color: #666; font-family: 'Arial', sans-serif;">We uphold strong moral principles in all our dealings.</p> <!-- Description -->
+  </div>
+  <div class="col" style="text-align: center; border: 1px solid #ffffff; padding: 10px; margin: 10px; flex: 1 1 200px;">
+      <h5 style="color: #282975; font-family: 'Arial', sans-serif; font-weight: bold;">Commitment to Serve</h5> <!-- Header -->
+      <p style="color: #666; font-family: 'Arial', sans-serif;">Dedicated to providing exceptional service to our community.</p> <!-- Description -->
+  </div>
+</div>
+<br>
+
+
+
+<div id="recyclable-cup" style="display: flex; align-items: center; margin-top: 20px; height: auto; max-height: 500px;">
+    <div style="flex: 1; max-width: 50%; padding-right: 20px;">
+      <img src="{{ url_for('static', filename='Recycbele.jpg') }}" class="img-fluid rounded" alt="Recyclable Packaging" 
+           style="width: 100%; max-height: 500px; object-fit: cover; border-radius: 10px;">
+    </div>
+    <div style="flex: 1;">
+      <h1 style="color: #676464; border-radius: 10px; padding: 10px; background-color: white; text-align: center; margin-bottom: 20px;">
+        Recyclable Packaging
+      </h1>
+      <p style="border-radius: 10px; padding: 10px; background-color: white; text-align: center; font-family: sans-serif;">
+        At SweetTalk, we are committed to sustainability and reducing our environmental impact. One of the ways we do this is through our use of recyclable packaging. We believe that every small step counts, which is why we use eco-friendly cups, straws, and lids that can be easily recycled. By choosing materials that are both functional and environmentally responsible, we aim to minimize waste and contribute to a greener future. Our dedication to sustainable practices extends beyond our products, as we continuously seek new ways to make a positive impact on the planet and our community.
+      </p>
+    </div>
+  </div>
+  
+
+<div id="sustainable-food-sourcing" style="display: flex; align-items: center; margin-top: 20px; height: 500px;">
+  <div style="flex: 1; max-width: 50%; padding-right: 20px;">
+    <img src="{{ url_for('static', filename='sustaiable.jpg') }}" class="img-fluid rounded" alt="Sustainable Food Sourcing" style="width: 100%; max-height: 400px; object-fit: cover; border-radius: 10px;">
+  </div>
+  <div style="flex: 1;">
+    <h1 style="color: #676464; border-radius: 10px; padding: 10px; background-color: white; text-align: center; margin-bottom: 20px;">
+      Sustainable Food Sourcing
+    </h1>
+    <p style="border-radius: 10px; padding: 10px; background-color: white; text-align: center; font-family: sans-serif;">
+      At SweetTalk, sustainability is at the heart of everything we do, including the way we source our ingredients. We prioritize working with local and sustainable suppliers who share our commitment to environmentally responsible practices. By choosing ingredients grown with minimal environmental impact, we not only support local farmers and communities but also ensure the freshest, highest-quality products for our customers. Our focus on sustainable food sourcing helps reduce our carbon footprint, supports fair labor practices, and contributes to a healthier planet for future generations.
+    </p>
+  </div>
+</div>
+
+<div id="sustainable-cities-and-community" style="display: flex; align-items: center; margin-top: 20px; height: 500px;">
+  <div style="flex: 1; max-width: 50%; padding-right: 20px;">
+    <img src="{{ url_for('static', filename='NTUUU.jpg') }}" class="img-fluid rounded" alt="Sustainable Cities and Community" style="width: 100%; height: 100%; object-fit: cover; border-radius: 10px;">
+  </div>
+  <div style="flex: 1;">
+    <h1 style="color: #676464; border-radius: 10px; padding: 10px; background-color: white; text-align: center; margin-bottom: 20px;">
+      Sustainable Cities and Community
+    </h1>
+    <p style="border-radius: 10px; padding: 10px; background-color: white; text-align: center; font-family: sans-serif;">
+      At SweetTalk, sustainability is at the heart of everything we do, including the way we source our ingredients. We prioritize working with local and sustainable suppliers who share our commitment to environmentally responsible practices. By choosing ingredients grown with minimal environmental impact, we not only support local farmers and communities but also ensure the freshest, highest-quality products for our customers. Our focus on sustainable food sourcing helps reduce our carbon footprint, supports fair labor practices, and contributes to a healthier planet for future generations.
+    </p>
+    <div style="text-align: center;">
+      <a href="https://www.globalgoals.org/" target="_blank" style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; margin-top: 10px;">Learn More</a>
+    </div>
+  </div>
+  
+</div>
+
+<br>
+<br>
+
+<img src="{{ url_for('static', filename='ourgoal.png') }}" class="card-img-top" alt="our_goal" style="width: 100%; height: auto;">
+<br>
+<br>
+<footer class="footer mt-auto" style="background-color: #939393; color: #d3d3d3; padding: 40px 20px; text-align: left;">
+    <div class="container" style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap;">
+
+        <!-- Customer Service Column -->
+        <div style="flex: 1; min-width: 250px;">
+            <h4 style="color: #d3d3d3; margin-bottom: 15px;">Customer Service</h4>
+            <ul style="list-style-type: none; padding: 0;">
+                <li><a href="{{ url_for('faq') }}" style="color: #d3d3d3; text-decoration: none;">FAQ</a></li>
+                <li><a href="{{ url_for('menu') }}" style="color: #d3d3d3; text-decoration: none;">Drinks</a></li>
+                <li><a href="#" style="color: #d3d3d3; text-decoration: none;">Contact Us</a></li>
+                <li><a href="#" style="color: #d3d3d3; text-decoration: none;">Returns & Exchanges</a></li>
+            </ul>
+        </div>
+
+        <!-- Navigation Links Column -->
+        <div style="flex: 1; min-width: 250px;">
+            <h4 style="color: #d3d3d3; margin-bottom: 15px;">Quick Links</h4>
+            <ul style="list-style-type: none; padding: 0;">
+                <li><a href="{{ url_for('home') }}" style="color: #d3d3d3; text-decoration: none;">Home</a></li>
+                <li><a href="{{ url_for('Aboutus') }}" style="color: #d3d3d3; text-decoration: none;">About Us</a></li>
+                <li><a href="#" style="color: #d3d3d3; text-decoration: none;">Log In</a></li>
+                <li><a href="#" style="color: #d3d3d3; text-decoration: none;">Sign Up</a></li>
+            </ul>
+        </div>
+
+        <!-- Payment Methods Column -->
+        <div style="flex: 1; min-width: 250px;">
+            <h4 style="color: #d3d3d3; margin-bottom: 15px;">Payment Methods</h4>
+            <ul style="list-style-type: none; padding: 0;">
+                <li><img src="{{ url_for('static', filename='visa.png') }}" alt="Visa" style="width: 40px; margin-right: 10px;"></li>
+                <li><img src="{{ url_for('static', filename='card.png') }}" alt="MasterCard" style="width: 40px; margin-right: 10px;"></li>
+                <li><img src="{{ url_for('static', filename='paypal.png') }}" alt="PayPal" style="width: 40px; margin-right: 10px;"></li>
+                <li><img src="{{ url_for('static', filename='paynow-logo-2.png') }}" alt="PayNow" style="width: 10vh; margin-right: 20vh;"></li>
+            </ul>
+        </div>
+
+         <!-- Social Media Icons -->
+         <div style="flex: 1; min-width: 250px;">
+            <h4 style="color: #d3d3d3; margin-bottom: 10px;">Follow Us</h4>
+            <a href="https://www.facebook.com/sweettalk" style="margin: 0 10px; text-decoration: none;">
+                <img src="{{ url_for('static', filename='facebook-icon.png') }}" alt="Facebook" style="width: 24px; height: 24px;">
+            </a>
+            <a href="https://www.instagram.com/sweettalk" style="margin: 0 10px; text-decoration: none;">
+                <img src="{{ url_for('static', filename='instagram-icon.png') }}" alt="Instagram" style="width: 24px; height: 24px;">
+            </a>
+            <a href="https://www.twitter.com/sweettalk" style="margin: 0 10px; text-decoration: none;">
+                <img src="{{ url_for('static', filename='twitter-icon.png') }}" alt="Twitter" style="width: 24px; height: 24px;">
+            </a>
+        </div>
+    </div>
+
+    <!-- Copyright Section -->
+    <div style="margin-top: 20px; text-align: center;">
+        <p style="margin: 0;">&copy; 2025 Sweet Talk. All rights reserved.</p>
+    </div>
+</footer>
+
+</body>
+{%endblock%}

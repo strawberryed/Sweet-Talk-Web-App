@@ -1,0 +1,403 @@
+{% extends "base.html" %}
+{% block title %}SweetTalk - Home{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<style>
+  .popup-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+    z-index: 1000;
+  }
+
+  .popup-container.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .popup-container img {
+    width: 100%;
+    border-radius: 10px;
+  }
+
+  .popup-container button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background-color: #ff5733;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  .popup-container button:hover {
+    background-color: #d9432a;
+  }
+
+  #map {
+
+    height: 100vh;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 768px) {
+    #home-page-thumbnail {
+      flex-direction: column;
+    }
+
+    #home-page-thumbnail>div {
+      max-width: 100%;
+    }
+
+    .banner-video-container {
+      width: 100%;
+      height: 500px;
+      /* Set your desired height */
+      overflow: hidden;
+    }
+
+    .banner-video-container video {
+      height: 100%;
+      object-fit: cover;
+      /* Ensures the video fills the height while maintaining aspect ratio */
+    }
+  }
+</style>
+<!-- Pop-up Modal -->
+<div id="popup" class="popup-container">
+  <h3>New Drink Alert! 🍹</h3>
+  <img src="{{ url_for('static', filename='result (4).png') }}" alt="New Drink">
+  <p>Try our refreshing new summer blend. Limited time only!</p>
+  <button onclick="closePopup()">Got it!</button>
+  <a href="{{url_for('menu')}}" style=" margin-top: 10px; padding: 11px 15px; text-decoration: none; 
+  background-color: #ff5733;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;">Let's go!</a>
+</div> 
+
+<body>
+
+  <div class="banner-video-container" style="position: relative;">
+    <video class="d-block w-100" autoplay loop muted>
+      <source src="{{ url_for('static', filename='teapicking.MP4') }}" type="video/mp4" style="max-width: fit-content;">
+    </video>
+    <h1 style="
+        font-family: 'Poppins', sans-serif; 
+        text-align: center; 
+        color: white; 
+        font-weight: 600; 
+        position: absolute; 
+        top: 50%; 
+        left: 50%; 
+        transform: translate(-50%, -50%);
+        font-size: 3rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);">
+      Authentic and Fresh Picked Leaves
+    </h1>
+  </div>
+
+  <div id="home-page-thumbnail" style="display: flex; flex-wrap: wrap; align-items: center; margin-top: 20px;">
+    <!-- Left Side: Image -->
+    <div style="flex: 1; max-width: 50%; display: flex; justify-content: center;">
+      <img src="{{ url_for('static', filename='sweettalkhomebanner-ezgif.com-optimize.gif') }}"
+        class="img-fluid rounded" alt="dummyimage" style="width: 80%; height: auto; max-height: 800px; margin-right: 22vh;">
+    </div>
+
+    <!-- Right Side: Text Content -->
+    <div
+      style="flex: 1; margin-left: 20px; display: flex; flex-direction: column; justify-content: center; align-items: flex-end;">
+      <h1
+        style="color: #676464; border-radius: 10px; padding: 10px; background-color: white; text-align: right; margin-right: 20px; margin-top: 0; margin-bottom: 20px;">
+        ABOUT US
+      </h1>
+      <p
+        style="border-radius: 10px; padding: 10px; background-color: white; text-align: right; margin-right: 15px; margin-top: 0; margin-bottom: 5px; font-family: sans-serif;">
+        SweetTalk origins from Singapore, encapsulating childhood of every Singaporean.
+      </p>
+
+      <p
+        style="border-radius: 10px; padding: 10px; background-color: white; text-align: right; margin-right: 15px; margin-top: 0; margin-bottom: 5px; font-family: sans-serif;">
+        Guided by our mission to bring people together and forge relationships via a good cup of tea.
+      </p>
+      <p
+        style="border-radius: 10px; padding: 10px; background-color: white; text-align: right; margin-right: 20px; margin-top: 5px; margin-bottom: 5px; font-family: sans-serif;">
+        We are committed to providing healthy and low-calorie tea beverages suitable for daily consumption.
+      </p>
+
+      <div style="margin-left: auto; margin-top: 10px; margin-bottom: 20px;">
+        <a href="{{ url_for('Aboutus') }}" style="text-decoration: none;">
+          <button
+            style="border: 2px solid #676464; border-radius: 20px; background-color: rgba(255, 255, 255, 0.5); color: #676464; padding: 10px 20px; cursor: pointer; font-family: sans-serif;">
+            Learn more
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <br>
+  <h1 style="font-family: sans-serif; text-align: center; color: rgb(8, 8, 56); font-weight:400;">
+    BEST SELLERS</h1>
+  <div class="card-group">
+    <div class="card">
+      <img src="{{ url_for('static',filename='result (4).png') }}" class="card-img-top" alt="seaonal tea" width="400px"
+        height="350px">
+      <div class="card-body">
+        <h5 class="card-title">Seasonal Tea</h5>
+        <p class="card-text">Enjoy our special milk tea flavors inspired by the seasons!
+          From fruity infusions in summer to warm, spiced blends in winter,
+          our seasonal milk teas bring a refreshing twist to your favorite drink. Limited-time only!</p>
+        <p class="card-text"><small class="text-body-secondary">Menu items and flavors may vary by location and are
+            subject to availability</small></p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="{{ url_for('static',filename='result.png') }}" class="card-img-top" alt="Classic Milk Tea Series"
+        width="400px" height="350px">
+      <div class="card-body">
+        <h5 class="card-title">Classic Milk Tea</h5>
+        <p class="card-text">A timeless favorite, our Classic Milk Tea is
+          made with premium black tea and creamy milk for a smooth, rich taste.
+          Perfectly balanced in sweetness and boldness, this is the ultimate go-to drink
+          for milk tea lovers.</p>
+        <p class="card-text"><small class="text-body-secondary">Menu items and flavors may vary by location and are
+            subject to availability</small></p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="{{ url_for('static',filename='result (1).png') }}" class="card-img-top" alt="Ice Blended Tea"
+        width="400px" height="350px">
+      <div class="card-body">
+        <h5 class="card-title">Ice blended Tea</h5>
+        <p class="card-text">A cool and creamy treat! Our Ice Blended Milk Tea is a refreshing twist
+          on traditional milk tea, blended with ice to create a smooth,
+          slushy texture. Perfect for beating the heat while enjoying your favorite flavors!</p>
+        <p class="card-text"><small class="text-body-secondary">Menu items and flavors may vary by location and are
+            subject to availability</small></p>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <div class="container mb-5"> <!-- Added container for proper alignment -->
+    <div class="row">
+      <div class="col-md-3"> <!-- Text box takes 1/4 of the screen -->
+        <div style="flex: 1; margin-left: 20px; display: flex; flex-direction: column; justify-content: flex-start;">
+          <h3
+            style="color: #676464; border-radius: 10px; padding: 10px; background-color: white; text-align: left; margin-right: 10px; margin-top: 150px; margin-bottom: 20px;">
+            About Our Tea
+          </h3>
+          <p style="font-family:sans-serif; color: #676464;">Made from quality tea leaves and handpicked ingredients,
+            each cup of Sweettalk tea is made fresh to order</p>
+        </div>
+        <div style="text-align: left; margin-top: 10px; margin-bottom: 20px;">
+          <a href="{{ url_for('menu') }}" style="text-decoration: none;">
+            <button
+              style="border: 2px solid #676464; border-radius: 20px; background-color: rgba(255, 255, 255, 0.5); color: #676464; padding: 10px 10px; cursor: pointer; font-family: sans-serif; ">
+              Learn more
+            </button>
+          </a>
+        </div>
+      </div>
+      <div class="col-md-9"> <!-- Carousel takes the remaining space -->
+        <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{{ url_for('static',filename='seasonaltea(2).jpg') }}" height="460px">
+                    <div class="card-body">
+                      <h5 class="card-title">Finest Seasonal Tea</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{{ url_for('static',filename='cold brew tea.jpg') }}" height="460px">
+                    <div class="card-body">
+                      <h5 class="card-title">Brewed Tea</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card h-100">
+                    <img
+                      src="{{ url_for('static',filename='Oreo Bubble Shake (8 MINUTES Only!) - That Cute Dish!.jpg') }}"
+                      height="460px">
+                    <div class="card-body">
+                      <h5 class="card-title">Ice blended</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Add more carousel items as needed -->
+            <div class="carousel-item">
+              <div class="row row-cols-1 row-cols-md-3 g-4">
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{{ url_for('static',filename='milodinimage.jpg') }}" height="460px">
+                    <div class="card-body">
+                      <h5 class="card-title">Old School Series</h5>
+                    </div>
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="card h-100">
+                    <img src="{{ url_for('static',filename='iceblendeddummy.png') }}" height="460px">
+                    <div class="card-body">
+                      <h5 class="card-title">Fruity Season</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#cardCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#cardCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <h3 style="font-family: sans-serif; text-align: center; color: rgb(8, 8, 56); font-weight:400;">
+    Our Stores</h3>
+  <div style="display: flex; gap: 20px; margin-bottom: 40px;">
+    <!-- Map Container -->
+    <div style="flex: 3;">
+      <div id="map"></div>
+    </div>
+
+    <!-- Outlet Details Box -->
+    <div
+      style="flex: 1; background-color: #f8f9fa; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); height: fit-content;">
+      <img src="{{ url_for('static', filename='dummyimage.jpg') }}" alt="Outlet Image"
+        style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
+      <h4 style="color: #333;">Outlet Details</h4>
+      <p><strong>Operating Hours:</strong></p>
+      <p>Monday - Friday: 10:00 AM - 10:00 PM</p>
+      <p>Saturday - Sunday: 11:00 AM - 11:00 PM</p>
+      <p><strong>Location:</strong></p>
+      <p>123 Sweet Street, Hougang Ave 4, Singapore</p>
+    </div>
+  </div>
+
+  <script>
+    function initMap() {
+      var shopLocation = { lat: 1.3722, lng: 103.8931 }; // Coordinates for Hougang Ave 4, Singapore
+      var map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 15,
+        center: shopLocation
+      });
+      var marker = new google.maps.Marker({
+        position: shopLocation,
+        map: map,
+        title: "Find Us Here!"
+      });
+    }
+      window.onload = function() {
+        setTimeout(() => { 
+          let popup = document.getElementById('popup'); 
+            popup.classList.add('show'); 
+            setTimeout(() => { popup.classList.remove('show'); }, 15000); }, 1000); }; function closePopup() {document.getElementById('popup').classList.remove('show'); }
+  </script>
+
+  <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDRGLzSmiUJ3H7Y0ukg1W6doUI5TfUmEhk&callback=initMap"></script>
+
+  <body
+    style="font-family: Arial, sans-serif; margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh;">
+
+
+    <footer class="footer mt-auto"
+      style="background-color: #939393; color: #d3d3d3; padding: 40px 20px; text-align: left;">
+      <div class="container"
+        style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap;">
+
+        <!-- Customer Service Column -->
+        <div style="flex: 1; min-width: 250px;">
+          <h4 style="color: #d3d3d3; margin-bottom: 15px;">Customer Service</h4>
+          <ul style="list-style-type: none; padding: 0;">
+            <li><a href="{{ url_for('faq') }}" style="color: #d3d3d3; text-decoration: none;">FAQ</a></li>
+            <li><a href="{{ url_for('menu') }}" style="color: #d3d3d3; text-decoration: none;">Drinks</a></li>
+            <li><a href="#" style="color: #d3d3d3; text-decoration: none;">Contact Us</a></li>
+            <li><a href="#" style="color: #d3d3d3; text-decoration: none;">Returns & Exchanges</a></li>
+          </ul>
+        </div>
+
+        <!-- Navigation Links Column -->
+        <div style="flex: 1; min-width: 250px;">
+          <h4 style="color: #d3d3d3; margin-bottom: 15px;">Quick Links</h4>
+          <ul style="list-style-type: none; padding: 0;">
+            <li><a href="{{ url_for('home') }}" style="color: #d3d3d3; text-decoration: none;">Home</a></li>
+            <li><a href="{{ url_for('Aboutus') }}" style="color: #d3d3d3; text-decoration: none;">About Us</a></li>
+            <li><a href="#" style="color: #d3d3d3; text-decoration: none;">Log In</a></li>
+            <li><a href="#" style="color: #d3d3d3; text-decoration: none;">Sign Up</a></li>
+          </ul>
+        </div>
+
+        <!-- Payment Methods Column -->
+        <div style="flex: 1; min-width: 250px;">
+          <h4 style="color: #d3d3d3; margin-bottom: 15px;">Payment Methods</h4>
+          <ul style="list-style-type: none; padding: 0;">
+            <li><img src="{{ url_for('static', filename='visa.png') }}" alt="Visa"
+                style="width: 40px; margin-right: 10px;"></li>
+            <li><img src="{{ url_for('static', filename='card.png') }}" alt="MasterCard"
+                style="width: 40px; margin-right: 10px;"></li>
+            <li><img src="{{ url_for('static', filename='paypal.png') }}" alt="PayPal"
+                style="width: 40px; margin-right: 10px;"></li>
+            <li><img src="{{ url_for('static', filename='paynow-logo-2.png') }}" alt="PayNow"
+                style="width: 10vh; margin-right: 20vh;"></li>
+          </ul>
+        </div>
+
+        <!-- Social Media Icons -->
+        <div style="flex: 1; min-width: 250px;">
+          <h4 style="color: #d3d3d3; margin-bottom: 10px;">Follow Us</h4>
+          <a href="https://www.facebook.com/sweettalk" style="margin: 0 10px; text-decoration: none;">
+            <img src="{{ url_for('static', filename='facebook-icon.png') }}" alt="Facebook"
+              style="width: 24px; height: 24px;">
+          </a>
+          <a href="https://www.instagram.com/sweettalk" style="margin: 0 10px; text-decoration: none;">
+            <img src="{{ url_for('static', filename='instagram-icon.png') }}" alt="Instagram"
+              style="width: 24px; height: 24px;">
+          </a>
+          <a href="https://www.twitter.com/sweettalk" style="margin: 0 10px; text-decoration: none;">
+            <img src="{{ url_for('static', filename='twitter-icon.png') }}" alt="Twitter"
+              style="width: 24px; height: 24px;">
+          </a>
+        </div>
+      </div>
+
+      <!-- Copyright Section -->
+      <div style="margin-top: 20px; text-align: center;">
+        <p style="margin: 0;">&copy; 2025 Sweet Talk. All rights reserved.</p>
+      </div>
+    </footer>
+
+
+  </body>
+  {% endblock %}
